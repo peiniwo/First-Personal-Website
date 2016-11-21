@@ -1,37 +1,11 @@
+'use strict'
 var path = require('path');
-
-var PATHS = {
-	app: path.join(__dirname, 'client/js/init.js'),
-	build: path.join(__dirname, 'client/build')
-};
-
-var entry;
-var plugins;
-
-// if (process.env.NODE_ENV === 'production') {
-// 	var webpack = require('webpack');
-// 	entry = [
-// 		PATHS.app,
-// 		'webpack-dev-server/client?http://localhost:3001',
-// 		'webpack/hot/only-dev-server',
-// 	];
-// 	plugins = [new webpack.HotModuleReplacementPlugin()];
-// } else {
-	entry = [PATHS.app];
-// }
-module.exports = {
-	entry: entry,
+var webpack = require('webpack');
+var config = {
+	entry: path.join(__dirname, 'public/js/init.js'),
 	output: {
-		path: path.join(__dirname, 'client/build'),
+		path: path.join(__dirname, 'public/build'),
 		filename: 'bundle.js'
-	},
-	devServer: {
-		contentBase: PATHS.build,
-		historyApiFallback: true,
-		inline: true,
-		stats: 'errors-only',
-		host: process.env.HOST,
-		port: 3001
 	},
 	module: {
 	    loaders: [
@@ -49,5 +23,16 @@ module.exports = {
 	htmlLoader: {
 		ignoreCustomFragments: [/\{\{.*?}}/]
 	},
-    plugins: plugins
-}
+    plugins: [
+    	new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                drop_console: true
+            },
+            beautify: false,
+            // Eliminate comments
+            comments: false,
+        })
+    ]
+};
+module.exports = config;

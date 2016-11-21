@@ -1,5 +1,8 @@
-var fetchPage = require('./fetchPage.js');
+'use strict'
+require('lightbox2');
+window.jQuery = window.$ = require('jquery');
 
+var fetchPage = require('./fetchPage.js');
 var attachClickEvent = function() {
 	var upperMenu = ['academic', 'experience', 'competencies'];
 	$('.dotted').on('click', function(event) {
@@ -17,7 +20,6 @@ var attachClickEvent = function() {
 		$('.word .' + targetClass).addClass('active');
 	});
 };
-
 
 var attachMenuBarEvent = function() {
 	$('.navi').on('click', function(event) {
@@ -41,13 +43,13 @@ var getURL = function () {
 		var pageNames = ['academic', 'experience', 'competencies', 'education', 'portfolio', 'techskills'];
 		var portfolioPage = ['portfolio-graphic', 'portfolio-jewelry', 'portfolio-painting', 'portfolio-webdesign'];
 		if (pageNames.indexOf(pageName) > -1) {
-			$('.dotted.' + pageName).trigger('click');	
+			$('.dotted.' + pageName).trigger('click');
 		} else if (portfolioPage.indexOf(pageName) > -1) {
 			fetchPage(pageName);
 		} else {
 			window.location.pathname = '/';
 		}
-	} 
+	}
 };
 
 var init = function() {
@@ -55,5 +57,4 @@ var init = function() {
 	attachMenuBarEvent();
 	getURL();
 };
-
 init();

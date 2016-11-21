@@ -66,5 +66,4 @@ module.exports = function() {
         currentDot.removeClass('active-dot');
         prevDot.addClass('active-dot');
     });
-}; 
-
+};
